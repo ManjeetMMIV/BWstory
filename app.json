@@ -1,17 +1,22 @@
 {
   "expo": {
-    "name": "intern_assignment",
-    "slug": "intern_assignment",
+    "name": "BWStory",
+    "slug": "bwstory-clone",
     "version": "1.0.0",
+    "scheme": "bwstory",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.blackcoffer.bwstory.clone"
     },
     "android": {
+      "package": "com.blackcoffer.bwstory.clone",
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#1C2B3A",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -19,6 +24,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-image-picker",
+      "expo-web-browser"
+    ]
   }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "819910526914",
+    "project_id": "bwstory-clone-16517",
+    "storage_bucket": "bwstory-clone-16517.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819910526914:android:32b15a7f26a4e5e082f85b",
+        "android_client_info": {
+          "package_name": "com.blackcoffer.bwstory.clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819910526914-aq01r08v5e6ierkq7p0qhii07lqeiqo3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-xVAZ9DQZ-5NJwn0-5lKSV3GpQL7AScc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819910526914-aq01r08v5e6ierkq7p0qhii07lqeiqo3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
