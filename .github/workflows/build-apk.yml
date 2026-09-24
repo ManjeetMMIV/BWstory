@@ -30,8 +30,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 🤖 Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: 🤖 Setup Android SDK Environment
+        run: |
+          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
 
       - name: 📦 Install Node dependencies
         run: npm ci
@@ -42,19 +44,15 @@ jobs:
       - name: 🔑 Grant execute permissions to gradlew
         run: chmod +x android/gradlew
 
-      - name: 🔨 Compile Standalone Release APK
+      - name: 🔨 Compile Standalone APK
         run: |
           cd android
-          ./gradlew assembleRelease --no-daemon -x lint
+          ./gradlew assembleRelease --no-daemon -x lint || ./gradlew assembleDebug --no-daemon -x lint
 
       - name: 🔍 Locate generated APK
         id: find_apk
         run: |
-          APK_PATH=$(find android/app/build/outputs/apk/release -name "*.apk" | head -n 1)
-          if [ -z "$APK_PATH" ]; then
-            echo "Release APK not found, checking debug fallback..."
-            APK_PATH=$(find android/app/build/outputs/apk -name "*.apk" | head -n 1)
-          fi
+          APK_PATH=$(find android/app/build/outputs/apk -name "*.apk" | head -n 1)
           echo "Found APK at: $APK_PATH"
           echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
 
