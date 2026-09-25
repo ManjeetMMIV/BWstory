@@ -41,13 +41,20 @@ jobs:
       - name: ⚙️ Generate Android native project (Expo Prebuild)
         run: npx expo prebuild --platform android --clean
 
+      - name: 🔧 Disable R8/ProGuard minification for release
+        run: |
+          # Disable code shrinking so Hermes + React Native classes aren't stripped
+          sed -i 's/minifyEnabled true/minifyEnabled false/g' android/app/build.gradle
+          sed -i 's/shrinkResources true/shrinkResources false/g' android/app/build.gradle
+          echo "✅ Minification disabled in release build"
+
       - name: 🔑 Grant execute permissions to gradlew
         run: chmod +x android/gradlew
 
-      - name: 🔨 Compile Standalone APK
+      - name: 🔨 Compile Standalone Release APK
         run: |
           cd android
-          ./gradlew assembleDebug --no-daemon -x lint
+          ./gradlew assembleRelease --no-daemon -x lint
 
       - name: 🔍 Locate generated APK
         id: find_apk
