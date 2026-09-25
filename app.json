@@ -14,6 +14,7 @@
     "android": {
       "package": "com.blackcoffer.bwstory.clone",
       "versionCode": 1,
+      "newArchEnabled": false,
       "adaptiveIcon": {
         "backgroundColor": "#1C2B3A",
         "foregroundImage": "./assets/android-icon-foreground.png",

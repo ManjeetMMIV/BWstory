@@ -5,7 +5,7 @@
 // Session stays alive as long as the app is open.
 // ─────────────────────────────────────────────────────────
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { initializeAuth, inMemoryPersistence } from 'firebase/auth';
+import { initializeAuth, getAuth, inMemoryPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 export const GOOGLE_WEB_CLIENT_ID = '819910526914-aq01r08v5e6ierkq7p0qhii07lqeiqo3.apps.googleusercontent.com';
@@ -24,9 +24,17 @@ const firebaseConfig = {
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
 // Auth with inMemoryPersistence (works without native modules)
-export const auth = initializeAuth(app, {
-  persistence: inMemoryPersistence,
-});
+// Use getAuth fallback if already initialized (prevents crash on standalone boot)
+let auth;
+try {
+  auth = initializeAuth(app, {
+    persistence: inMemoryPersistence,
+  });
+} catch (e) {
+  // auth/already-initialized — safe to reuse the existing instance
+  auth = getAuth(app);
+}
+export { auth };
 
 export const db = getFirestore(app);
 

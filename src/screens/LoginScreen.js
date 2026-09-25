@@ -23,7 +23,7 @@ import { useAuth } from '../context/AuthContext';
 import { COLORS } from '../theme/colors';
 
 // Complete any pending auth session if redirected back to web/app
-WebBrowser.maybeCompleteAuthSession();
+try { WebBrowser.maybeCompleteAuthSession(); } catch (e) { /* safe to ignore in standalone */ }
 
 export default function LoginScreen({ navigation }) {
   const { loginAsDemo } = useAuth();
