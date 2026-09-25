@@ -41,12 +41,26 @@ jobs:
       - name: ⚙️ Generate Android native project (Expo Prebuild)
         run: npx expo prebuild --platform android --clean
 
-      - name: 🔧 Disable R8/ProGuard minification for release
+      - name: 🔧 Patch build.gradle for CI (debug-signed release, no minification)
         run: |
-          # Disable code shrinking so Hermes + React Native classes aren't stripped
-          sed -i 's/minifyEnabled true/minifyEnabled false/g' android/app/build.gradle
-          sed -i 's/shrinkResources true/shrinkResources false/g' android/app/build.gradle
-          echo "✅ Minification disabled in release build"
+          node -e "
+          const fs = require('fs');
+          const file = 'android/app/build.gradle';
+          let content = fs.readFileSync(file, 'utf8');
+          
+          // Disable minification
+          content = content.replace(/minifyEnabled\s+true/g, 'minifyEnabled false');
+          content = content.replace(/shrinkResources\s+true/g, 'shrinkResources false');
+          
+          // Add debug signing to release block
+          content = content.replace(
+            /release\s*\{/,
+            'release {\n            signingConfig signingConfigs.debug'
+          );
+          
+          fs.writeFileSync(file, content);
+          console.log('✅ Patched build.gradle successfully');
+          "
 
       - name: 🔑 Grant execute permissions to gradlew
         run: chmod +x android/gradlew
