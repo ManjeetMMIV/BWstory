@@ -47,7 +47,7 @@ jobs:
       - name: 🔨 Compile Standalone APK
         run: |
           cd android
-          ./gradlew assembleRelease --no-daemon -x lint || ./gradlew assembleDebug --no-daemon -x lint
+          ./gradlew assembleDebug --no-daemon -x lint
 
       - name: 🔍 Locate generated APK
         id: find_apk
